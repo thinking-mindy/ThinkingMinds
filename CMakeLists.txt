@@ -9,13 +9,13 @@ find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 qt_standard_project_setup()
 
 qt_add_executable(appThinkingMinds
-    main.cpp
+    main.cpp minds.cpp minds.h
 )
 
 qt_add_qml_module(appThinkingMinds
     URI ThinkingMinds
     VERSION 1.0
-    QML_FILES Main.qml Android.qml Wifi.qml Dashboard.qml MyRage.qml
+    QML_FILES Main.qml Android.qml Wifi.qml Dashboard.qml MyRage.qml Footer.qml
 )
 
 set_target_properties(appThinkingMinds PROPERTIES

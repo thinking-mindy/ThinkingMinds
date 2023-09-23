@@ -10,49 +10,67 @@ ApplicationWindow {
     title: qsTr("Hello World")
     property bool showBar: false
     Material.theme: Material.Light
-    Material.accent: Material.Purple
+    Material.accent:Qt.hsla(0.7,1,0.5,1)
+    Material.background:'#f5f5f5'
+    Material.foreground:Qt.hsla(0.7,1,0.5,1)
+    Material.primary:Material.Pink
 
-    menuBar: MenuBar {
-                visible:showBar
-             Menu {
-                 title: qsTr("&MINDS")
-                 Action { text: qsTr("&Report bug") }
-                 Action { text: qsTr("&Contact Us...") }
-                 MenuSeparator{}
-                 Action { text: qsTr("&Quit");onTriggered:Qt.quit()}
-             }
-             Menu {
-                 title: qsTr("&Pages")
-                 Action{text:qsTr("Home");onTriggered:()=>{nav.clear();nav.push(dash)}}
-                 Action{text:qsTr("Android");onTriggered:()=>{nav.push(apk)}}
-                 Action{text:qsTr("Wifi");onTriggered:()=>{nav.push(w)}}
-                 Action{text:qsTr("&Rage");onTriggered:()=>{nav.push(rage)}}
-             }
-             Menu {
-                 title: qsTr("&Edit")
-                 Action { text: qsTr("Refresh") }
-                 Action { text: qsTr("&Restart") }
-                 Action { text: qsTr("&Paste") }
-             }
-             Menu {
-                 title: qsTr("&Help")
-                 Action { text: qsTr("&Docs") }
-                 Action { text: qsTr("&About") }
-             }
-         }
-    StackView{
-     id:nav
-     initialItem: welcome
-     anchors.fill:parent
+    header:TabBar {
+        id: bar
+        width: parent.width
+        TabButton {
+            text: qsTr("Home")
+            onClicked: nav.push(dash)
+        }
+        TabButton {
+            text: qsTr("Wifi")
+            onClicked: nav.push(w)
+        }
+        TabButton {
+            text: qsTr("Android")
+            onClicked: nav.push(apk)
+        }
+        TabButton {
+            text: qsTr("My Rage")
+            onClicked: nav.push(rage)
+        }
     }
-    Component{
-        id:welcome
-        Page{
-            title: "Welcome"
-            ColumnLayout{id:sLay;spacing:2;anchors{centerIn:parent}
-                Text{id:txt;text:"<b>Welcome user<b>";Layout.alignment:Qt.AlignCenter}
-                Text{id:txt2;text:"Press the key below to continue";Layout.alignment:Qt.AlignCenter}
-                Button{id:but;text:"Continue";Layout.alignment:Qt.AlignCenter;Material.background:Qt.hsla(243,100, 50,0.1);onClicked:()=>{nav.clear();nav.push(dash);showBar=true}}
+    footer: Footer{id:foo}
+    StackView {
+        id: nav
+        anchors.fill: parent
+        initialItem: dash
+
+        pushEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to:1
+                duration: 200
+            }
+        }
+        pushExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to:0
+                duration: 200
+            }
+        }
+        popEnter: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 0
+                to:1
+                duration: 200
+            }
+        }
+        popExit: Transition {
+            PropertyAnimation {
+                property: "opacity"
+                from: 1
+                to:0
+                duration: 200
             }
         }
     }
