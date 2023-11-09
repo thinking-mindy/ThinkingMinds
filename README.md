@@ -1,11 +1,12 @@
 # ThinkingMinds
-A Hacking Software made with love by Thinking Minds 
+A Hacking Software made with love by Thinking Minds : https://thinkingminds.co.zw
 
 # NOTE
 This software is still under development and not ready yet, so don't expect much.
 
 # Story
-This software is a hacking software being made by Thinking Minds. It's not going to be big and it might not work equally on all platforms, so don't expect much.
+This software is a hacking software being made by Thinking Minds. It's not going to be big and it might not work equally and properly on all platforms, so don't expect much.
+Coding is a hobby, so i'm doing this to pass y time but if you find this useful, feel free to use it and modify it in any way that you please.
 Any ideas and feedbacks are welcome through my Whatsapp/call: +263771657582
 
 # Purpose
