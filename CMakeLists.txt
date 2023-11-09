@@ -15,7 +15,7 @@ qt_add_executable(appThinkingMinds
 qt_add_qml_module(appThinkingMinds
     URI ThinkingMinds
     VERSION 1.0
-    QML_FILES Main.qml Android.qml Wifi.qml Dashboard.qml MyRage.qml Footer.qml
+    QML_FILES Main.qml Android.qml Wifi.qml Dashboard.qml MyRage.qml Footer.qml WLExploit.qml Testing.qml
 )
 
 set_target_properties(appThinkingMinds PROPERTIES

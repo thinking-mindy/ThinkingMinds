@@ -7,32 +7,36 @@ ApplicationWindow {
     width: 840
     height: 480
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("The Walking Dead")
     property bool showBar: false
     Material.theme: Material.Light
-    Material.accent:Qt.hsla(0.7,1,0.5,1)
+    Material.accent:Material.Red
     Material.background:'#f5f5f5'
-    Material.foreground:Qt.hsla(0.7,1,0.5,1)
-    Material.primary:Material.Pink
+    Material.foreground:Material.Red
+    Material.primary:Material.Red
 
     header:TabBar {
         id: bar
         width: parent.width
         TabButton {
-            text: qsTr("Home")
-            onClicked: nav.push(dash)
+            text: qsTr("Welcome")
+            onClicked: nav.replace(dash)
         }
         TabButton {
             text: qsTr("Wifi")
-            onClicked: nav.push(w)
+            onClicked: nav.replace(w)
         }
         TabButton {
             text: qsTr("Android")
-            onClicked: nav.push(apk)
+            onClicked: nav.replace(apk)
         }
         TabButton {
             text: qsTr("My Rage")
-            onClicked: nav.push(rage)
+            onClicked: nav.replace(rage)
+        }
+        TabButton {
+            text: qsTr("Testing")
+            onClicked: nav.replace(tes)
         }
     }
     footer: Footer{id:foo}
@@ -40,6 +44,7 @@ ApplicationWindow {
         id: nav
         anchors.fill: parent
         initialItem: dash
+
 
         pushEnter: Transition {
             PropertyAnimation {
@@ -76,6 +81,8 @@ ApplicationWindow {
     }
     Dashboard{id:dash}
     Wifi{id:w}
+    WLExploit{id:w_linux}
     Android{id:apk}
     MyRage{id:rage}
+    Testing{id:tes}
 }

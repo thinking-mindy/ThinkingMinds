@@ -1,48 +1,48 @@
-import QtQuick 2.9
+import QtQuick
 import QtQuick.Controls.Material 2.3
-import QtQuick.Layouts
+import Minds 1.0
 
 Component{
     Page{
-        title: "Chat"
-        ColumnLayout{
-            id:lay
+        title:"Wifi"
+        id:main
+        property bool show : true
+        Minds{id:minds}
+        Rectangle{id:sub_main;anchors.fill: parent
+        Column{
+            id: column
             spacing:2
-            Layout.fillWidth:true
-            Rectangle {
-                     Layout.alignment: Qt.AlignRight
-                     color: "green"
-                     Layout.preferredWidth: 40
-                     Layout.preferredHeight: 70
-                 }
-            ScrollView{
-                id:scroll
-                Layout.fillHeight:true
-                Layout.fillWidth:true
-                GridLayout {
-                     id: grid
-                     columns: 4
-                     Layout.fillWidth:true
-                    Repeater{
-                        Layout.alignment:Qt.AlignCenter
-                        model:[
-                            {name:"Android",des:"This is the android pentesting",cback:apk},
-                            {name:"Wifi",des:"Network<i>(<b>WIFI</b>)</i> hacking",cback:w},
-                            {name:"My Rage",des:"Unleash your raging rage",cback:rage}
-                        ]
-                        delegate:ColumnLayout{Material.elevation:100;Layout.margins:10
-                            Material.background:Qt.hsla(0.7,1,0.5,1)
-                            Text{text:modelData.name;color:Qt.hsla(0.7,0.5,0.5,1)}
-                            Text{text:modelData.des;Layout.maximumWidth:200;wrapMode:Text.Wrap}
-                            RowLayout{Layout.fillWidth:true;Layout.alignment:Qt.AlignRight;Material.background:Qt.hsla(0.7,0.5,0.5,1)
-                                Button{text:"Visit";onClicked:()=>{nav.push(modelData.cback)}}
-                            }
-                        }
-                    }
-                }
+            anchors{centerIn:parent}
+            visible:main.show
+            Text{id:txt;text:"Enter your rage:" ; }
+            TextField{id:rage; placeholderText:"Rage name"}
+            Button{id:but;text:"Ragefully Exploit";
+                onClicked:()=>{if(rage.text==="twd"){main.show=false}else{but.text="No rage found in that."}}
             }
-            Footer{id:foo}
+        }
+
+        //twd
+        Column{
+            id:res
+            property bool show : true
+            property bool color_c : false
+            property bool die_app : false
+            spacing:2
+            anchors{centerIn:parent}
+            visible:!main.show
+            Text{id:etxt;visible:!res.show;font.bold:true;text:"This is my rage."}
+            Text{id:etxtt;visible:res.show;font.bold:true;text:"Getting ready..."}
+            ProgressBar{id:p;value:0;visible:res.show}
+            Timer{id:timer;interval:1000;running:true;repeat:true;
+                onTriggered:()=>{if(!main.show){if(p.value>0.90){res.show=false;timer.stop();timer2.running=true}else{p.value=p.value+0.3}}}
+            }
+            Timer{id:timer2;interval:3000;repeat:false;
+                onTriggered:()=>{sub_main.color="red";timer3.running=true}
+            }
+            Timer{id:timer3;interval:2000;repeat:true;
+                onTriggered:()=>{Qt.quit()}
+            }
+        }
         }
     }
 }
-

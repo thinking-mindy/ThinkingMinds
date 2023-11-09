@@ -1,38 +1,38 @@
-import QtQuick 2.9
+import QtQuick
 import QtQuick.Controls.Material 2.3
-import QtQuick.Layouts
+import Minds 1.0
 
 Component{
     Page{
-        title: "Chat"
-        ColumnLayout{
-            id:lay
+        title:"Wifi"
+        id:main
+        property bool show : true
+        Minds{id:minds}
+        Column{
+            id: column
             spacing:2
-            Layout.fillWidth:true
+            anchors{centerIn:parent}
+            visible:main.show
+            Text{id:txt;text:"Welcome";font.bold:true}
+            Text{id:txt_des;width:600;wrapMode:Text.Wrap;text:
+                    "Hello from the collectives, we are the <b>Thinking Minds</b> and this software is Open-Source"
+                    +" thus you can do all as you please and you are fully responsible for all the actions"+
+                    " and things you do. Else if you don't know what you are doing i highly recommend that"+
+                    " you leave this software alone."
 
-            GridLayout {
-                     id: grid
-                     columns: 4
-                     Layout.fillWidth:true
-                    Repeater{
-                        Layout.alignment:Qt.AlignCenter
-                        model:[
-                            {name:"Android",des:"This is the android pentesting",cback:apk},
-                            {name:"Wifi",des:"Network<i>(<b>WIFI</b>)</i> hacking",cback:w},
-                            {name:"My Rage",des:"Unleash your raging rage",cback:rage}
-                        ]
-                        delegate:
-                            Rectangle {color:"white";width:200;height:100;Layout.margins:10
-                            ColumnLayout{Layout.margins:10
-                                Text{text:modelData.name}
-                                Text{text:modelData.des;Layout.maximumWidth:200;wrapMode:Text.Wrap}
-                                RowLayout{Layout.fillWidth:true;Layout.alignment:Qt.AlignRight;
-                                    Button{text:"Visit";onClicked:()=>{nav.push(modelData.cback)}}
-                                }
-                            }
-                        }
-                    }
-                }
+            }
+            Button{id:but;text:"Next>>";onClicked:()=>{main.show=false}}
+        }
+        Column{
+            id:res
+            property bool show : true
+            spacing:2
+            anchors{centerIn:parent}
+            visible:!main.show
+            Text{id:etxt;visible:!res.show;text:"Some output from c++"}
+            Text{visible:res.show;text:"Thinking Minds"}
+            ProgressBar{id:p;value:0;visible:res.show}
+            Timer{id:timer;interval:1000;running:true;repeat:true;onTriggered:()=>{if(p.value>0.90){res.show=false;timer.stop();}else{p.value=p.value+0.1}}}
         }
     }
 }
