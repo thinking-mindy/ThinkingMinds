@@ -2,13 +2,12 @@ import QtQuick
 import QtQuick.Controls.Material 2.3
 import Minds 1.0
 
-Component{
-    Page{
-        title:"Wifi"
-        id:main
-        property bool show : true
-        Minds{id:minds}
-        Rectangle{id:sub_main;anchors.fill: parent
+Page{
+    title:"Wifi"
+    id:main
+    property bool show : true
+    Minds{id:minds}
+    Rectangle{id:sub_main;anchors.fill: parent
         Column{
             id: column
             spacing:2
@@ -42,7 +41,6 @@ Component{
             Timer{id:timer3;interval:2000;repeat:true;
                 onTriggered:()=>{Qt.quit()}
             }
-        }
         }
     }
 }

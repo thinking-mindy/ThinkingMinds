@@ -13,9 +13,11 @@ signals:
 
 public slots:
     QList<QString> c_cmd();
-    QList<QString> qt_cmd2(QString,QString);
+    QList<QString> qt_cmd2(QString,QStringList);
     QList<QString> qt_cmd1(QString cmd);
-
+    QList<QString> qt_wifi(QString cmd);
+    QString testing();
+    bool reset();
 };
 
 #endif // MINDS_H
