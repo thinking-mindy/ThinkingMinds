@@ -1,0 +1,21 @@
+[package]
+name = "fulgul"
+version = "0.1.0"
+edition = "2021"
+authors = ["Thinking Minds"]
+build = "build.rs"
+description = ""
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dns-lookup = "2.0.4"
+regex = "1.11.1"
+reqwest = "0.12.9"
+serde_json = "1.0.133"
+simple_crypt = "0.2.3"
+slint = "1.8.0"
+tokio = { version = "1.42.0", features = ["full"] }
+
+[build-dependencies]
+slint-build = "1.8.0"
