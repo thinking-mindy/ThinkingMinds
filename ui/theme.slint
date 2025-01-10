@@ -1,0 +1,86 @@
+
+import { Palette } from "std-widgets.slint";
+export struct Palette {
+    // primary
+    background: brush,
+    wtext: brush,
+    side-bar: brush,
+    side-bar-h: brush,
+    dark: brush,
+    text:brush,
+    err:brush,
+    card:brush,
+    text-light:brush,
+    background-gradient: brush,
+    shadow: brush,
+    shadow1: brush,
+}
+
+export struct Spaces {
+    small: length,
+    medium: length,
+    large: length,
+}
+export struct Lay {
+    vpadding: length,
+    hpadding: length,
+    vspacing: length,
+    hspacing: length,
+    rd:length
+}
+
+struct Font {
+    size: length,
+    weight: float,
+}
+
+export struct Typo {
+    text: Font,
+    label: Font,
+    header: Font
+}
+
+export global Theme {
+    in property <Palette> palette: {
+        background:Palette.color-scheme==ColorScheme.dark?#2b2b32:#f6fffc,
+        wtext:#ffffff,
+        dark: #00bd3f,
+        side-bar: #25f78e,
+        side-bar-h: Palette.color-scheme==ColorScheme.dark?#006b3f:#21f781,
+        card: Palette.color-scheme==ColorScheme.dark?#006d40:#ffffff,
+        text:Palette.color-scheme==ColorScheme.dark?#fafafa:#0e0f0f,
+        err:#ff0000e6,
+        text-light:#0000008b,
+        shadow:Palette.color-scheme==ColorScheme.dark?#006b3f:#00fc54,//#0000002d,
+        shadow1:#00fc54,
+        background-gradient: @radial-gradient(circle,#fffffff0 1%, #0025FF00 100%),
+    };
+
+    in property <Spaces> spaces: {
+        small: 5px,
+        medium: 10px,
+        large: 20px,
+    };
+    in property <Lay>lay: {
+        vpadding: 10px,
+        hpadding: 10px,
+        vspacing: 5px,
+        hspacing: 5px,
+        rd:10px
+    };
+
+    in property <Typo> typo: {
+        text: {
+            size: 14px,
+            weight: 500
+        },
+        label: {
+            size: 14px,
+            weight: 700
+        },
+        header: {
+            size: 16px,
+            weight: 800
+        }
+    };
+}

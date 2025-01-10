@@ -1,0 +1,15 @@
+import { Palette } from "std-widgets.slint";
+
+import {PortScanner} from "./pages/pentesting/globals.slint";
+
+global Navigation {
+    in-out property <int> page:0;
+    in-out property <int> pentest-page:0;
+    in-out property <int> find-page:0;
+    in-out property <bool> theme:Palette.color-scheme==ColorScheme.light?true:false;
+    callback finish_setup();
+
+}
+
+export { PortScanner,Navigation}
+
