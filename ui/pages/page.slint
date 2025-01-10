@@ -1,0 +1,56 @@
+
+import { Switch, GridBox, ListView, ScrollView, HorizontalBox, VerticalBox, Palette, Button, GroupBox } from "std-widgets.slint";
+import {LoginCheck, LoginStatus} from "./login.slint";
+import {Theme} from "../theme.slint";
+import { Navigation } from "../globals.slint";
+import { SSwitch, SText } from "../modules/surrealism-ui/index.slint";
+
+
+export global AppState {
+    callback refresh();
+}
+
+export component Page inherits VerticalLayout {
+    in property <string> title: "title";
+    in property <string> description: "description";
+    alignment: LayoutAlignment.start;
+    spacing: 10px;
+    padding: 10px;
+
+        HorizontalBox {
+            if Navigation.pentest-page>0||Navigation.find-page>0:
+            HorizontalBox{alignment:start;
+                if Navigation.page==1:Button{text:"<";clicked =>{if Navigation.pentest-page>0{ Navigation.pentest-page=(Navigation.pentest-page)-1}}}
+                if Navigation.page==2:Button{text:"<";clicked =>{if Navigation.find-page>0{ Navigation.find-page=(Navigation.find-page)-1}}}
+            }
+            
+                Text {
+                    font-size: 20px;
+                    font-weight: 900;
+                    vertical-alignment: center;
+                    horizontal-alignment: left;
+                    text <=> root.title;
+                }
+            
+            // Spacer
+            Rectangle { }
+
+                HorizontalBox {
+                alignment: end;
+                SText {text: "Light";theme: Palette.color-scheme == ColorScheme.dark?Dark:Light;}
+
+                sw:=SSwitch {
+                    active: Palette.color-scheme == ColorScheme.dark;
+                    theme: Palette.color-scheme == ColorScheme.dark?Dark:Light;
+                    clicked(v) => {
+                        Palette.color-scheme = v ? ColorScheme.dark : ColorScheme.light;
+                    }
+                }
+                SText {text: "Dark";theme: Palette.color-scheme == ColorScheme.dark?Dark:Light;}
+
+                
+            }
+            
+        }
+        @children
+    }

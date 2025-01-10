@@ -1,0 +1,60 @@
+import { HorizontalBox, Button,Palette } from "std-widgets.slint";
+import {Theme} from "../theme.slint";
+import { Navigation } from "../globals.slint";
+import { Card } from "../modules/surrealism-ui/src/card/card.slint";
+import { Divider } from "../modules/surrealism-ui/src/divider/divider.slint";
+import { SButton } from "../modules/surrealism-ui/src/button/index.slint";
+import { SText } from "../modules/surrealism-ui/index.slint";
+
+struct Item {
+    title:string,
+    des:string,
+    b:string,
+    page:int,
+    id:string
+}
+export component Cardy inherits Card {
+    in-out property <Item> item;
+    width: 350px;
+    height: 180px;
+    background: Theme.palette.card;
+    theme: Palette.color-scheme==ColorScheme.dark?Dark:Light;
+    border-radius: 10px;
+    Rectangle {
+    
+    clip: false;
+
+    VerticalLayout {
+        alignment: LayoutAlignment.start;
+        padding: 20px;
+        spacing: 14px;
+            SText {
+                text: item.title;
+                wrap: TextWrap.word-wrap;
+                font-weight: Theme.typo.header.weight;
+                horizontal-alignment: TextHorizontalAlignment.left;
+                theme:Palette.color-scheme==ColorScheme.dark?Dark:Light;
+            }
+
+            Divider {width:300px;theme: Palette.color-scheme==ColorScheme.dark?Light:Dark;opacity: 0.1;}
+            SText {
+                text:item.des;
+                color: Palette.foreground;
+                wrap: word-wrap;
+                theme:Palette.color-scheme==ColorScheme.dark?Dark:Light;
+            }
+    
+            HorizontalBox {
+                alignment:center;
+                SButton {
+                    text: item.b;
+                    theme:Palette.color-scheme==ColorScheme.dark?Light:Success;
+                    clicked => {
+                        if item.id=="home"{Navigation.page=item.page}
+                        else if item.id=="ceh"{Navigation.pentest-page=item.page}
+                    }
+                }
+            }
+        }
+}
+}

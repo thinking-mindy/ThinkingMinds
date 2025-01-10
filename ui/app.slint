@@ -1,0 +1,58 @@
+import {LeftBar} from "./nav/leftbar.slint";
+import { RightBar } from "./nav/rightbar.slint";
+import { TopHeader} from "./nav/topheader.slint";
+import { Navigation,PortScanner } from "./globals.slint";
+import { VerticalBox, Button } from "std-widgets.slint";
+import {Theme} from "./theme.slint";
+import { AboutPage, Dashboard, LoginPage,AccountPage,SettingsPage,Find, Pentesting,LoginCheck,LoginStatus,DnsScreen} from "./pages/pages.slint";
+
+export { LoginCheck,LoginStatus,Navigation,PortScanner}
+export component App inherits Window {
+    height: 640px;
+    width: 1180px;
+    title: @tr("Fulgul : The Spark");
+    icon: @image-url("../public/logo.png");
+    default-font-size: 14px;
+    default-font-weight: 400;
+    default-font-family:"Calibri";
+
+    if !LoginCheck.logged_in:LoginPage { }
+
+    if LoginCheck.logged_in:HorizontalLayout {
+        left-wrapper := Rectangle {
+            z: 111;
+            height: 100%;
+            width: menu.wd * 1px;
+            clip: false;
+            menu := LeftBar { }
+        }
+
+        right-wrapper := Rectangle {
+            z: 100;
+            width: parent.width - menu.width;
+            background:Theme.palette.background;
+            index-page := Rectangle {
+                height: 100%;
+                width: 100%;
+                background: Theme.palette.background;
+                VerticalLayout {
+                    HorizontalLayout {
+                        padding: 8px;
+                        alignment: center;
+                        Rectangle {
+                            height: header.height;
+                            header := TopHeader { }
+                        }
+                    }
+
+                    if(Navigation.page == 0):  Dashboard { }
+                    if(Navigation.page == 1):  Pentesting { }
+                    if(Navigation.page == 2): Find { }
+                    if(Navigation.page == 3): AboutPage { }
+                    if(Navigation.page == 4): AccountPage { }
+                    if(Navigation.page == 5): SettingsPage { }
+                }
+            }
+        }
+    }
+}

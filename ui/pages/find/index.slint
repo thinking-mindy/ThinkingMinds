@@ -1,0 +1,93 @@
+
+import { HorizontalBox, VerticalBox, StandardTableView, GroupBox, LineEdit, ComboBox, Button, StandardListView, ListView,Palette, ProgressIndicator, StandardButton} from "std-widgets.slint";
+import {PortScanner} from "../../globals.slint";
+import {Theme} from "../../theme.slint";
+import { Page } from "../page.slint";
+
+export component Find inherits Page {
+    title: @tr("Find");
+    out property <bool> print: false;
+
+        VerticalBox {
+            GroupBox {
+                HorizontalBox {
+                    spacing: 5px;
+                    ip := LineEdit {
+                        placeholder-text: @tr("IMEI Number of device (Required)");
+                        input-type: text;
+                    }
+                    sp := LineEdit {
+                        placeholder-text: @tr("S/N (Optional)");
+                        input-type: number;
+                    }
+                    tp := LineEdit {
+                        placeholder-text: @tr("IP address (Optional)");
+                        input-type: number;
+                    }
+                    
+                    Button {
+                        text: "Scan ";
+                        clicked => {
+                            if ip.text=="localhost" || ip.text==""{
+                                PortScanner.begin_scan("localhost",sp.text,tp.text)
+                            }else{
+                                PortScanner.begin_scan(ip.text,sp.text,tp.text)
+                            }
+                        }
+                    }
+                }
+            }
+
+            if PortScanner.v_ip:
+            Text {
+                color: red;
+                text: "Please enter a valid host name/ip address.";
+                horizontal-alignment: center;
+            }
+            
+            if PortScanner.loading: ProgressIndicator{indeterminate:true;}
+            
+            GroupBox {
+                title: @tr("Device Location Info");
+                VerticalBox {
+                    HorizontalBox {
+                        //visible: PortScanner.open_ports.length>0;
+                        ports:=StandardListView {
+                            model: PortScanner.open_ports;
+                            current-item: 0;
+                
+                        }
+                        VerticalBox {
+                            Button {
+                                text: "Erase Device "+ports.model[ports.current-item].text;
+                            }
+                            Button {
+                                text: "Ring Device "+ports.model[ports.current-item].text;
+                            }
+                            Button {
+                                text: "Take ScreenShot "+ports.model[ports.current-item].text;
+                            }
+                            Button {
+                                text: "Get Call Logs "+ports.model[ports.current-item].text;
+                            }
+                            Button {
+                                text: "Get Text Messages "+ports.model[ports.current-item].text;
+                            }
+                            Button {
+                                text: "Lock "+ports.model[ports.current-item].text;
+                            }
+                        }
+                    }
+                
+                    Text {
+                        visible: PortScanner.open_ports.length<1;
+                        horizontal-alignment: center;
+                        text: "No results yet";
+                        font-weight: Theme.typo.header.weight;
+                    }
+
+                }
+            }
+        }
+}
+

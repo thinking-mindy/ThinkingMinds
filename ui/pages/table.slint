@@ -1,0 +1,26 @@
+import {StandardTableView} from "std-widgets.slint";
+
+export global PHistory {
+    in property <[[StandardListViewItem]]> row_data: [];
+    callback  sort_ascending(int);
+    callback  sort_descending(int);
+    callback  search_items(string);
+}
+
+export component Table inherits StandardTableView {
+    sort-ascending(index) => {
+        PHistory.sort_ascending(index);
+    }
+
+    sort-descending(index) => {
+        PHistory.sort-descending(index);
+    }
+    columns: [
+        { title: @tr("Map") },
+        { title: @tr("") },
+        { title: @tr("") },
+        { title: @tr("") },
+        { title: @tr("") },
+    ];
+    rows: PHistory.row_data;
+}

@@ -1,0 +1,105 @@
+
+import { Button, GroupBox, SpinBox, ComboBox, CheckBox, LineEdit, TabWidget, VerticalBox, HorizontalBox,
+    Slider, ProgressIndicator, SpinBox, Switch, Spinner, GridBox,Palette } from "std-widgets.slint";
+import {Theme} from "../theme.slint";
+import { SInput, SCard, SAlert, SLoading } from "../modules/surrealism-ui/index.slint";
+import { SButton } from "../modules/surrealism-ui/src/button/index.slint";
+
+export global LoginStatus {
+    in property <bool> loading:false;
+}
+
+export global LoginCheck {
+    //in property <bool> logged_in:false;
+    in property <bool> logged_in:true;
+    in property <bool> err:false;
+    callback validate_login(string, string);
+}
+
+export component LoginPage inherits Rectangle {
+    background: Theme.palette.background;
+    if !LoginStatus.loading:
+    
+        SCard {
+        card-height: 350px;
+        card-width: 350px;
+        theme: Palette.color-scheme == ColorScheme.dark ? Dark : Light;
+        background: Theme.palette.card;
+        drop-shadow-blur: 8px;
+        border-radius: 9px;
+        Rectangle {
+            VerticalLayout {
+                alignment: center;
+                spacing: 24px;
+                padding: 24px;
+
+                Text {
+                    text: @tr("Fulgul: The Spark");
+                    color: Palette.foreground;
+                    font-size: Theme.typo.header.size;
+                    font-weight: Theme.typo.header.weight;
+                    font-family: "Calibri";
+                    horizontal-alignment: center;
+                }
+
+                Text {
+                    text: @tr("Thinking in terms of lifetimes");
+                    color: Palette.foreground;
+                    font-italic: true;
+                    font-size: Theme.typo.text.size;
+                    font-weight: Theme.typo.text.weight;
+                    horizontal-alignment: center;
+                }
+
+                uname := SInput {
+                    placeholder: @tr("Username");
+                    type: text;
+                    theme: Palette.color-scheme == ColorScheme.dark ? Dark : Light;
+                }
+
+                pass := SInput {
+                    placeholder: @tr("Password");
+                    type: InputType.password;
+                    password: true;
+                    theme: Palette.color-scheme == ColorScheme.dark ? Dark : Light;
+                    font-color: Theme.palette.text;
+                }
+
+                Rectangle {
+
+                    SButton {
+                        text: @tr("Login");
+                        theme: Success;
+                        clicked => {
+                            if (uname.text != "" && pass.text != "") {
+                                LoginStatus.loading = true;
+                                LoginCheck.validate_login(uname.text,pass.text);
+                                p.error("Error logging in, contact our IT team for assistance.");
+                            } else {
+                                p.error("Invalid Details, please check your details and try again.")
+                            }
+
+                        }
+                    }
+                }
+
+                Rectangle {
+                    p := SAlert {}
+                }
+            }
+        }
+    }
+
+    if LoginStatus.loading: VerticalBox {
+        Rectangle {
+
+            loading := SLoading {
+                text: "Please wait...";
+                background: Theme.palette.background;
+                theme: Palette.color-scheme == ColorScheme.dark ? Dark : Light;
+                font-color: Theme.palette.text;
+                font-weight: 900;
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+import {SMenu} from "../modules/surrealism-ui/index.slint";
+import { Navigation } from "../globals.slint";
+
+struct MenuData {
+    id:string,
+    name:string,
+    icon:image
+}
+export component LeftBar inherits Rectangle {
+    in-out property <int> wd:menu.width/1px;
+    height: 100%;
+    clip: false;
+    in-out property <[MenuData]> udata:[
+        {id:0,name:"Dashboard",icon:@image-url("../modules/surrealism-ui/icons/hamburger-button.svg")},
+        {id:1,name:"Pentesting",icon:@image-url("../modules/surrealism-ui/icons/source-code.svg")},
+        {id:2,name:"Find",icon:@image-url("../modules/surrealism-ui/icons/iphone.svg")},
+        {id:3,name:"About",icon:@image-url("../modules/surrealism-ui/icons/help.svg")}
+    ];
+    in-out property <[MenuData]> ddata:[
+        {id:4,name:"Account",icon:@image-url("../modules/surrealism-ui/icons/avatar.svg")},
+        {id:5,name:"Settings",icon:@image-url("../modules/surrealism-ui/icons/setting-two.svg")}
+    ];
+
+    menu := SMenu {
+        menu-data: udata;
+        sub-menu-data: ddata;
+        active: 0;
+        change(index, data) => {
+            Navigation.page=data.id.to-float();
+        }
+        theme:Navigation.theme?Light:Dark;
+        active-color: #03fd6b;
+    }
+}

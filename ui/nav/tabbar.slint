@@ -1,0 +1,43 @@
+import { STab,STabPanel,SText} from "../modules/surrealism-ui/index.slint";
+import { SOption} from "../modules/surrealism-ui/use/index.slint";
+import { TabPanel } from "../modules/surrealism-ui/src/tab/tab-panel.slint";
+
+
+export component TopTab {
+    in property <[SOption]> tabs;
+    height: 100%;
+    function show-panel(index: string) {
+        panel1.visible = false;
+        panel2.visible = false;
+        if (index == panel1.index) {
+            panel1.visible = true;
+        } else if (index == panel2.index) {
+            panel2.visible = true;
+        } else {
+            panel1.visible = true;
+        }
+    }
+    STab {
+        tabs:tabs;
+        
+        changed(kv) => {
+            show-panel(kv.value);
+        }
+        mounted(index) => {
+            show-panel(index);
+        }
+        panel1 := STabPanel {
+            index: "0";
+            SText {
+                text: "This is a Panel -> test1";
+            }
+        }
+
+        panel2 := STabPanel {
+            index: "1";
+            SText {
+                text: "This is a Panel -> test2";
+            }
+        }
+    }
+}

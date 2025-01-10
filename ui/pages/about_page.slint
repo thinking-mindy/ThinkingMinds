@@ -1,0 +1,28 @@
+
+import { Page } from "page.slint";
+import { GroupBox, VerticalBox, Palette} from "std-widgets.slint";
+import { SPersona } from "../modules/surrealism-ui/index.slint";
+
+export component AboutPage inherits Page {
+    title: @tr("About");
+    description: @tr("Are you curious now? Check out the docs and getting starteds from the Github repository and the website https://slint.dev and try it yourself.");
+
+    Rectangle {
+       
+            SPersona {
+                avatar: @image-url("../../public/logo-w.png");
+                avatar-height: 180px;
+                name: "Thinking Minds";
+                name-font-italic: true;
+                name-theme: Palette.color-scheme==ColorScheme.dark?Dark:Light;
+                width: 300px;
+                name-font-weight: 900;
+                des: @tr("This app was made with love by Thinking Minds.");
+                des-font-size: 14px;
+                des-theme: Palette.color-scheme==ColorScheme.dark?Dark:Light;
+                btn-text: "www.thinkingminds.co.zw";
+                theme:Palette.color-scheme==ColorScheme.dark?Dark:Light;
+                }
+            }
+            
+}

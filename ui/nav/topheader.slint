@@ -1,0 +1,11 @@
+import {SHeader} from "../modules/surrealism-ui/index.slint";
+import {Navigation} from "../globals.slint";
+import {Theme} from "../theme.slint";
+
+export component TopHeader inherits SHeader {
+        value: [{ label:"ThinkingMinds", value:"1" }, { label:"Dashboard", value:"2" }];
+        clicked(index,data)=>{Navigation.page=index;}
+        theme:Navigation.theme?Light:Dark;
+        font-color: Theme.palette.text;
+
+}
