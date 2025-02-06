@@ -1,8 +1,6 @@
-
 #![deny(unsafe_code)]
 slint::include_modules!();
-use std::time::Duration;
-use slint::Timer;
+use slint::Model;
 use fulgul::dev::minds;
 
 fn my_log(my_err:&str){
@@ -18,7 +16,6 @@ async fn main() {
 
     app.global::<LoginCheck>().on_validate_login({
         let tmp=app.as_weak();
-
        move |uname,pass|{
         if uname=="rooty" && pass=="rooty"{
             tmp.unwrap().global::<LoginCheck>().set_logged_in(true);
@@ -31,11 +28,9 @@ async fn main() {
 
         app.global::<PortScanner>().on_begin_scan({
             let tmp=app.as_weak();
-            let tmps=app.as_weak();
+            tmp.unwrap().global::<PortScanner>().set_loading(true);
+
             move|a,b,c|{
-
-                tmps.unwrap().global::<PortScanner>().set_loading(true);
-
                 if minds::my_ip(a.to_string()){
                     let tmpp=tmp.clone();
                     tokio::spawn(async move{
@@ -43,26 +38,53 @@ async fn main() {
                         let _=slint::invoke_from_event_loop(move||{
                         let ports=slint::ModelRc::new(slint::VecModel::from(tmpa.clone()));
                         tmpp.unwrap().global::<PortScanner>().set_open_ports(ports);
+                        tmpp.unwrap().global::<PortScanner>().set_loading(false);
+
                         });
                     });
                 }else{
                     tmp.unwrap().global::<PortScanner>().set_v_ip(true);
                 }
+            }
+        });
+        app.global::<Wifi>().on_scan_wifi({
+            let tmps=app.as_weak();
 
-                tmps.unwrap().global::<PortScanner>().set_loading(false);
-
-
+            tmps.unwrap().global::<Wifi>().set_loading(true);
+            move||{
+                let tmpp=tmps.clone();
+                tokio::spawn(async move{
+                    let tmpa=minds::scan_networks().await;
+                    let _=slint::invoke_from_event_loop(move||{
+                    let names=slint::ModelRc::new(slint::VecModel::from(tmpa.clone()));
+                    tmpp.unwrap().global::<Wifi>().set_wifi_names(names);
+                    tmpp.unwrap().global::<Wifi>().set_loading(false);
+                    });
+                });
             }
         });
 
-        app.global::<Navigation>().on_finish_setup({
+        app.global::<Navigation>().on_go({
+            let tmp=app.as_weak();
+            move |a,b|{
+                let tmpp=tmp.clone();
+                let mut arr:Vec<i32>=tmpp.unwrap().global::<Navigation>().get_history().iter().collect();
+                tmpp.unwrap().global::<Navigation>().set_page(a);
+                tmpp.unwrap().global::<Navigation>().set_page_name(b);
+                if arr.len()==0{arr.push(a)}else{if let Some(value) =arr.last() {if a!=*value{arr.push(a)}}}
+                tmpp.unwrap().global::<Navigation>().set_history(slint::ModelRc::new(slint::VecModel::from(arr.clone())));
+            }
+        });
+
+        app.global::<Navigation>().on_go_back({
             let tmp=app.as_weak();
             move ||{
                 let tmpp=tmp.clone();
-                my_log("setup-complete");
-                Timer::single_shot(Duration::from_millis(2000), move||{tmpp.unwrap().global::<Navigation>().set_pentest_page(0);})
+                let mut arr:Vec<i32>=tmpp.unwrap().global::<Navigation>().get_history().iter().collect();
+                let lpage=if arr.len()>0{arr.pop().unwrap()}else{0};
+                tmpp.unwrap().global::<Navigation>().set_page(lpage);
+                tmpp.unwrap().global::<Navigation>().set_history(slint::ModelRc::new(slint::VecModel::from(arr.clone())));
             }
-
         });
 
     app.run().unwrap();
