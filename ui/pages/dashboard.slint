@@ -1,7 +1,6 @@
 
 import { Button, GroupBox, VerticalBox, HorizontalBox, GridBox, StandardTableView,Palette } from "std-widgets.slint";
 import { Page } from "page.slint";
-import { Table } from "table.slint";
 import {Theme} from "../theme.slint";
 import {Cardy} from "../components/cardy.slint";
 
@@ -18,17 +17,25 @@ export component Dashboard inherits Page {
     title: @tr("Dashboard");
     description: @tr("This page gives an overview of the default widget set provided by Slint. The widgets are available in different styles native, fluent-(dark/light) and material-(dark/light). The widgets can be imported from \"std-widgets.slint\".");
 
-    Rectangle {
-
+    GridLayout {
+        spacing: 10px;
         in property <[Item]> screens:[
             {title:@tr("Pen-Testing"),des: @tr("Pen-test your own systems and get security sugesstions."),b:@tr("Start >"),page:1,id:"home"},
-            {title:@tr("Find"),des: @tr("Lost a mobile?. Track your mobile phone with us."),b:@tr("Start >"),page:2,id:"home"},
-            {title:@tr("About"),des: @tr("Get help?"),b:@tr("Start >"),page:3,id:"home"},
+            {title:@tr("Wifi Pentesting"),des: @tr("Pen-test your own systems and get security sugesstions."),b:@tr("Start >"),page:2,id:"home"},
+            {title:@tr("Dns Enum"),des: @tr("Pen-test your own systems and get security sugesstions."),b:@tr("Start >"),page:3,id:"home"},
+            {title:@tr("Find"),des: @tr("Lost a mobile?. Track your mobile phone with us."),b:@tr("Start >"),page:4,id:"home"},
+            {title:@tr("About"),des: @tr("Get help?"),b:@tr("Start >"),page:100,id:"home"},
         ];
-            HorizontalBox{
-                for item in screens:
-                    Cardy{item:item;}
-                }
-    }
 
+        Row{
+            Cardy{item:screens[0];}
+            Cardy{item:screens[1];}
+            Cardy{item:screens[2];}
+        }
+
+        Row{
+            Cardy{item:screens[3];}
+            Cardy{item:screens[4];}
+        }
+    }
 }

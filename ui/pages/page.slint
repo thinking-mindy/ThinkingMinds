@@ -18,10 +18,9 @@ export component Page inherits VerticalLayout {
     padding: 10px;
 
         HorizontalBox {
-            if Navigation.pentest-page>0||Navigation.find-page>0:
+            if Navigation.history.length>0:
             HorizontalBox{alignment:start;
-                if Navigation.page==1:Button{text:"<";clicked =>{if Navigation.pentest-page>0{ Navigation.pentest-page=(Navigation.pentest-page)-1}}}
-                if Navigation.page==2:Button{text:"<";clicked =>{if Navigation.find-page>0{ Navigation.find-page=(Navigation.find-page)-1}}}
+                Button{text:"<";clicked =>{Navigation.go_back()}}
             }
             
                 Text {

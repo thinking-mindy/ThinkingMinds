@@ -50,8 +50,7 @@ export component Cardy inherits Card {
                     text: item.b;
                     theme:Palette.color-scheme==ColorScheme.dark?Light:Success;
                     clicked => {
-                        if item.id=="home"{Navigation.page=item.page}
-                        else if item.id=="ceh"{Navigation.pentest-page=item.page}
+                        Navigation.go(item.page,item.title)
                     }
                 }
             }

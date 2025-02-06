@@ -3,9 +3,8 @@ import {Navigation} from "../globals.slint";
 import {Theme} from "../theme.slint";
 
 export component TopHeader inherits SHeader {
-        value: [{ label:"ThinkingMinds", value:"1" }, { label:"Dashboard", value:"2" }];
-        clicked(index,data)=>{Navigation.page=index;}
+        value: [{ label:"ThinkingMinds", value:"1" }, { label:Navigation.page-name, value:"1" }];
+        clicked(index,data)=>{Navigation.go(0,"Dashboard");}
         theme:Navigation.theme?Light:Dark;
         font-color: Theme.palette.text;
-
 }

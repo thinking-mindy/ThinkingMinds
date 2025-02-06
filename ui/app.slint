@@ -1,12 +1,13 @@
 import {LeftBar} from "./nav/leftbar.slint";
 import { RightBar } from "./nav/rightbar.slint";
 import { TopHeader} from "./nav/topheader.slint";
-import { Navigation,PortScanner } from "./globals.slint";
+import { Navigation,PortScanner,Wifi } from "./globals.slint";
 import { VerticalBox, Button } from "std-widgets.slint";
 import {Theme} from "./theme.slint";
 import { AboutPage, Dashboard, LoginPage,AccountPage,SettingsPage,Find, Pentesting,LoginCheck,LoginStatus,DnsScreen} from "./pages/pages.slint";
+import { WifiScreen } from "pages/pentesting/wifi/index.slint";
 
-export { LoginCheck,LoginStatus,Navigation,PortScanner}
+export { LoginCheck,LoginStatus,Navigation,PortScanner,Wifi}
 export component App inherits Window {
     height: 640px;
     width: 1180px;
@@ -45,12 +46,13 @@ export component App inherits Window {
                         }
                     }
 
-                    if(Navigation.page == 0):  Dashboard { }
-                    if(Navigation.page == 1):  Pentesting { }
-                    if(Navigation.page == 2): Find { }
-                    if(Navigation.page == 3): AboutPage { }
-                    if(Navigation.page == 4): AccountPage { }
-                    if(Navigation.page == 5): SettingsPage { }
+                    if(Navigation.page == 0): Dashboard { }
+                    if(Navigation.page == 1): Pentesting { }
+                    if(Navigation.page == 2): WifiScreen { }
+                    if(Navigation.page == 3): DnsScreen { }
+                    if(Navigation.page == 4): Find { }
+                    if(Navigation.page == 100): AboutPage { }
+                    if(Navigation.page == 110): SettingsPage { }
                 }
             }
         }

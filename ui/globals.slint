@@ -1,15 +1,27 @@
 import { Palette } from "std-widgets.slint";
 
-import {PortScanner} from "./pages/pentesting/globals.slint";
-
 global Navigation {
     in-out property <int> page:0;
-    in-out property <int> pentest-page:0;
-    in-out property <int> find-page:0;
     in-out property <bool> theme:Palette.color-scheme==ColorScheme.light?true:false;
-    callback finish_setup();
+    in-out property <string> page-name:"Dashboard";
+    in-out property <[int]> history:[];
+    callback go(int,string);
+    callback go_back();
 
 }
+global Wifi {
+    in property <bool> loading: false;
+    in property <bool> err: false;
+    in property <[StandardListViewItem]> wifi_names: [];
+    callback scan_wifi();
+    callback attack_wifi();
+}
 
-export { PortScanner,Navigation}
+global PortScanner{
+    in property <[StandardListViewItem]> open_ports: [];
+    in property <bool> v_ip: false;
+    in property <bool> loading: false;
+    callback begin_scan(string,string,string);
+}
+export { PortScanner,Navigation,Wifi}
 
